@@ -1,5 +1,6 @@
-import { cn } from '@/lib/tailwind-classname';
-import { forwardRef } from 'react';
+import { forwardRef } from "react";
+
+import { cn } from "@/lib/tailwind-classname";
 
 const Input = forwardRef<
   HTMLInputElement,

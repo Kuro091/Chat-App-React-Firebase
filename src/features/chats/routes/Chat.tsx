@@ -1,3 +1,5 @@
+import { MainLayout } from "@/components/layouts";
+
 export const Chat = () => {
-  return <div>Chat</div>;
-}
+  return <MainLayout>Chat</MainLayout>;
+};

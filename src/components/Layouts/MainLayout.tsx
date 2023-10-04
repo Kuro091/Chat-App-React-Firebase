@@ -6,7 +6,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Header />
-      <main className="min-h-screen w-screen bg-background flex flex-col">
+      <main className="min-h-screen w-screen flex flex-col text-black custom-background">
         {children}
       </main>
     </>

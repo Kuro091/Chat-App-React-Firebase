@@ -1,1 +1,1 @@
-export const protectedRoutes = [];
+export const publicRoutes = [];

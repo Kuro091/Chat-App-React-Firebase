@@ -20,12 +20,6 @@ export const siteConfig = {
       ];
     }
 
-    return [
-      ...common,
-      {
-        title: "Login",
-        href: "/login",
-      },
-    ];
+    return [...common];
   },
 };

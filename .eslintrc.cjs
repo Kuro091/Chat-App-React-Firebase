@@ -42,12 +42,6 @@ module.exports = {
           process.env.NODE_ENV === "prod" ? "unix" : "windows",
         ],
         "comma-dangle": ["warn", "always-multiline"],
-        "no-restricted-imports": [
-          "error",
-          {
-            patterns: ["@/features/*/*"],
-          },
-        ],
         "react/prop-types": "off",
 
         "import/order": [
@@ -86,7 +80,6 @@ module.exports = {
           {
             endOfLine: "auto",
           },
-          { usePrettierrc: true },
         ],
       },
     },
