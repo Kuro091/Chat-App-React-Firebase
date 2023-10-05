@@ -1,6 +1,6 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 
-import { Chat } from "./Chat";
+import { Chat } from './Chat';
 
 export const ChatRoutes = () => {
   return (

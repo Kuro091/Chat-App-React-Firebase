@@ -1,14 +1,17 @@
-import { Disclosure } from "@headlessui/react";
-import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Disclosure } from '@headlessui/react';
+import useResizeObserver from '@react-hook/resize-observer';
+import { Menu, X } from 'lucide-react';
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Icons } from "@/components/icons/Icons";
-import { siteConfig } from "@/config/site";
-import { LogoutButton } from "@/features/auth";
-import { useAuth } from "@/features/auth/hooks/useAuth";
-import { cn } from "@/lib/tailwind-classname";
+import { Icons } from '@/components/icons/Icons';
+import { siteConfig } from '@/config/site';
+import { LogoutButton } from '@/features/auth';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { cn } from '@/lib/tailwind-classname';
+import { useSiteStore } from '@/store/site';
 
-import { NavItem } from "./common";
+import { NavItem } from './common';
 
 const Hamburger = ({ open }: { open: boolean }) => {
   return (
@@ -24,9 +27,18 @@ const Hamburger = ({ open }: { open: boolean }) => {
 export const Header = () => {
   const { user } = useAuth();
   const isLoggedIn = !!user;
+  const headerRef = useRef<HTMLDivElement>(null);
+  const { setHeaderSize } = useSiteStore();
+
+  useResizeObserver(headerRef, (entry) => {
+    setHeaderSize(entry.target.clientHeight);
+  });
 
   return (
-    <nav className="w-full relative flex flex-wrap items-center justify-between px-8 py-6 mx-auto lg:justify-between bg-primary">
+    <nav
+      ref={headerRef}
+      className="w-full relative flex flex-wrap items-center justify-between px-8 py-6 mx-auto lg:justify-between bg-primary"
+    >
       {/* Mobile Nav  */}
       <Disclosure>
         {({ open }) => (
@@ -44,10 +56,7 @@ export const Header = () => {
 
               <Disclosure.Panel className="flex flex-col w-full my-5 lg:hidden">
                 <>
-                  <NavMenu
-                    navigation={siteConfig.getNavLinks(isLoggedIn)}
-                    mobile={true}
-                  />
+                  <NavMenu navigation={siteConfig.getNavLinks(isLoggedIn)} mobile={true} />
                 </>
               </Disclosure.Panel>
             </div>
@@ -66,13 +75,7 @@ export const Header = () => {
   );
 };
 
-const NavMenu = ({
-  navigation,
-  mobile = false,
-}: {
-  navigation: NavItem[];
-  mobile?: boolean;
-}) => {
+const NavMenu = ({ navigation, mobile = false }: { navigation: NavItem[]; mobile?: boolean }) => {
   return (
     <>
       {navigation.map((item, index) => {
@@ -89,10 +92,10 @@ const NavMenu = ({
 const MenuItem = ({ item, mobile }: { item: NavItem; mobile: boolean }) => {
   return (
     <Link
-      to={item?.href ? item.href : "#"}
+      to={item?.href ? item.href : '#'}
       className={cn(
-        "text-primary-foreground font-bold text-lg rounded-md outline-none hover:text-indigo-200 focus:text-indigo-100  transition-all focus:outline-none",
-        mobile ? "w-full block px-4 py-2 -ml-4" : "inline-block px-4 py-2",
+        'text-primary-foreground font-bold text-lg rounded-md outline-none hover:text-indigo-200 focus:text-indigo-100  transition-all focus:outline-none',
+        mobile ? 'w-full block px-4 py-2 -ml-4' : 'inline-block px-4 py-2'
       )}
     >
       {item.title}

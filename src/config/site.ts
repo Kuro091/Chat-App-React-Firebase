@@ -1,12 +1,12 @@
-import { NavItem } from "@/components/layouts/Header/common";
+import { NavItem } from '@/components/layouts/Header/common';
 
 export const siteConfig = {
-  name: "Chat App With Firebase",
+  name: 'Chat App With Firebase',
   getNavLinks: (isLoggedIn: boolean) => {
     const common: NavItem[] = [
       {
-        title: "Home",
-        href: "/",
+        title: 'Home',
+        href: '/',
       },
     ];
 
@@ -14,8 +14,8 @@ export const siteConfig = {
       return [
         ...common,
         {
-          title: "Chats",
-          href: "/chats",
+          title: 'Chats',
+          href: '/chats',
         },
       ];
     }

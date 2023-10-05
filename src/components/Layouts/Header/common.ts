@@ -1,4 +1,4 @@
-import { Icons } from "@/components/icons/Icons";
+import { Icons } from '@/components/icons/Icons';
 
 export interface NavItem {
   title: string;
@@ -10,7 +10,5 @@ export interface NavItem {
   description?: string;
 }
 
-export const isActiveRoute = (
-  currentRouteHref: string,
-  providedRouteHref: string
-) => currentRouteHref.startsWith(providedRouteHref);
+export const isActiveRoute = (currentRouteHref: string, providedRouteHref: string) =>
+  currentRouteHref.startsWith(providedRouteHref);

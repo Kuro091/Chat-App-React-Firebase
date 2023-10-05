@@ -1,14 +1,25 @@
-import GoogleButton from "react-google-button";
-import { PacmanLoader } from "react-spinners";
+import GoogleButton from 'react-google-button';
+import { PacmanLoader } from 'react-spinners';
 
-import { useGoogleSignIn } from "../hooks/useSignInWithGoogle";
+import { cn } from '@/lib/tailwind-classname';
 
-export const LoginButton = () => {
+import { useGoogleSignIn } from '../hooks/useSignInWithGoogle';
+
+interface LoginButtonProps {
+  className?: string;
+}
+
+export const LoginButton = ({ className }: LoginButtonProps) => {
   const { signInWithGoogle, loading } = useGoogleSignIn();
 
   if (loading)
     return (
-      <div className="flex flex-col gap-y-5 items-center bg-white p-20">
+      <div
+        className={cn(
+          'flex flex-col gap-y-5 items-center bg-white p-20',
+          className,
+        )}
+      >
         <div className="text-3xl font-bold text-primary">
           Waiting for you to login...
         </div>

@@ -27,23 +27,21 @@ module.exports = {
       extends: [
         "eslint:recommended",
         "plugin:import/errors",
-        "plugin:import/warnings",
-        "plugin:import/typescript",
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/recommended",
-        "plugin:prettier/recommended",
         "plugin:testing-library/react",
+        "plugin:prettier/recommended",
       ],
       rules: {
         "linebreak-style": [
           "error",
           process.env.NODE_ENV === "prod" ? "unix" : "windows",
         ],
-        "comma-dangle": ["warn", "always-multiline"],
+        "quotes": [2, "single", { "avoidEscape": true }],
         "react/prop-types": "off",
-
+        "import/named": "off",
         "import/order": [
           "error",
           {
@@ -61,12 +59,9 @@ module.exports = {
           },
         ],
         "import/default": "off",
-        "import/no-named-as-default-member": "off",
-        "import/no-named-as-default": "off",
         "import/no-unused-modules": "off",
         "import/namespace": "off",
         "react/react-in-jsx-scope": "off",
-
         "jsx-a11y/anchor-is-valid": "off",
 
         "@typescript-eslint/no-unused-vars": ["error"],
@@ -79,9 +74,10 @@ module.exports = {
           "error",
           {
             endOfLine: "auto",
-          },
+          }
         ],
       },
-    },
+      },
+      
   ],
 };
