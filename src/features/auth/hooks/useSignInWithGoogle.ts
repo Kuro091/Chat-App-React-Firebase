@@ -1,14 +1,28 @@
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import {
+  Auth,
+  GoogleAuthProvider,
+  UserCredential,
+  signInWithPopup,
+} from 'firebase/auth';
+import { useAuth } from 'reactfire';
 
-import { auth } from '@/lib/firebase';
+const signIn = async (
+  auth: Auth,
+  callback?: (value: UserCredential) => void,
+) => {
+  const provider = new GoogleAuthProvider();
 
-export const useGoogleSignIn = () => {
-  const [signInWithGoogle, data, loading, error] = useSignInWithGoogle(auth);
+  await signInWithPopup(auth, provider).then(callback);
+};
+
+interface UseGoogleSignInProps {
+  callback?: (value: UserCredential) => void;
+}
+
+export const useGoogleSignIn = ({ callback }: UseGoogleSignInProps) => {
+  const auth = useAuth();
 
   return {
-    signInWithGoogle,
-    loading,
-    data,
-    error,
+    signInWithGoogle: () => signIn(auth, callback),
   };
 };

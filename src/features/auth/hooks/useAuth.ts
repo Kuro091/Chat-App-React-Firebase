@@ -1,13 +1,12 @@
-import { useAuthState } from 'react-firebase-hooks/auth';
-
-import { auth } from '@/lib/firebase';
+import { useUser } from 'reactfire';
 
 export const useAuth = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const { data: user, status, isComplete, error } = useUser();
 
   return {
     user,
-    loading,
+    status,
+    isComplete,
     error,
   };
 };

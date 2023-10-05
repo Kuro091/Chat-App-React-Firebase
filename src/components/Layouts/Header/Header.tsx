@@ -56,14 +56,17 @@ export const Header = () => {
 
               <Disclosure.Panel className="flex flex-col w-full my-5 lg:hidden">
                 <>
-                  <NavMenu navigation={siteConfig.getNavLinks(isLoggedIn)} mobile={true} />
+                  <NavMenu
+                    navigation={siteConfig.getNavLinks(isLoggedIn)}
+                    mobile={true}
+                  />
                 </>
               </Disclosure.Panel>
             </div>
           </>
         )}
       </Disclosure>
-      {isLoggedIn && <span>Hello {user.displayName}</span>}
+      {isLoggedIn && <span>{user.displayName}</span>}
       {/* Desktop Nav  */}
       <div className="hidden text-center lg:flex lg:items-center">
         <ul className="items-center justify-end flex-1 pt-6 lg:pt-0 list-reset lg:flex">
@@ -75,7 +78,13 @@ export const Header = () => {
   );
 };
 
-const NavMenu = ({ navigation, mobile = false }: { navigation: NavItem[]; mobile?: boolean }) => {
+const NavMenu = ({
+  navigation,
+  mobile = false,
+}: {
+  navigation: NavItem[];
+  mobile?: boolean;
+}) => {
   return (
     <>
       {navigation.map((item, index) => {
@@ -95,7 +104,7 @@ const MenuItem = ({ item, mobile }: { item: NavItem; mobile: boolean }) => {
       to={item?.href ? item.href : '#'}
       className={cn(
         'text-primary-foreground font-bold text-lg rounded-md outline-none hover:text-indigo-200 focus:text-indigo-100  transition-all focus:outline-none',
-        mobile ? 'w-full block px-4 py-2 -ml-4' : 'inline-block px-4 py-2'
+        mobile ? 'w-full block px-4 py-2 -ml-4' : 'inline-block px-4 py-2',
       )}
     >
       {item.title}

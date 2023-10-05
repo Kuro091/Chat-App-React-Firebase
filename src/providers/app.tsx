@@ -1,5 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import {
+  AuthProvider,
+  FirebaseAppProvider,
+  FirestoreProvider,
+} from 'reactfire';
+
+import { app, auth, db } from '@/lib/firebase';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -14,7 +21,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         </div>
       }
     >
-      <Router>{children}</Router>
+      <FirebaseAppProvider firebaseApp={app}>
+        <AuthProvider sdk={auth}>
+          <FirestoreProvider sdk={db}>
+            <Router>{children}</Router>
+          </FirestoreProvider>
+        </AuthProvider>
+      </FirebaseAppProvider>
     </React.Suspense>
   );
 };
