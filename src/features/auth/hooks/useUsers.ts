@@ -8,9 +8,10 @@ export const useUsers = () => {
   const database = useDatabase();
   const usersRef = ref(database, 'users');
   const usersQuery = query(usersRef, orderByChild('online'));
-  const { data: users, status } = useDatabaseListData<UserData>(usersQuery, {
+  const { data: users, status } = useDatabaseListData<UserData & { uid: string }>(usersQuery, {
     idField: 'uid',
   });
+
   const { data: user } = useUser();
 
   const addUser = async (data: UserCredential) => {

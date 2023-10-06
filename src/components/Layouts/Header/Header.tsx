@@ -70,6 +70,7 @@ export const Header = () => {
       </Disclosure>
       {currentUser && (
         <UserProfile
+          className="w-full lg:w-fit mt-5 lg:mt-0"
           inverted
           displayName={currentUser?.displayName || ''}
           online={currentUser?.online || false}

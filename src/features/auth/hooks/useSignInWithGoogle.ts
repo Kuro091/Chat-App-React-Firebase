@@ -16,8 +16,7 @@ export const useGoogleSignIn = ({ callback }: UseGoogleSignInProps) => {
 
     await signInWithPopup(auth, provider)
       .then(callback)
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setLoading(false);
       });
 

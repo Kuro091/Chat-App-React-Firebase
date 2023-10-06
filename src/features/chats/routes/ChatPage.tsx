@@ -3,11 +3,14 @@ import { LoadingSpinner } from '@/components/loadingUI';
 import { useUsers } from '@/features/auth/hooks/useUsers';
 
 import { ChatTabs } from '../components/ChatTabs';
+import { ChatInputProps } from '../components/GroupConversation';
+import { useGroupMessages } from '../hooks/useGroupMessages';
 import { useGroups } from '../hooks/useGroups';
 
 export const ChatPage = () => {
   const { users, status, currentUser } = useUsers();
-  const { addGroup } = useGroups();
+  const { addGroup, selectedGroupId } = useGroups();
+  const { groupMessages } = useGroupMessages(selectedGroupId);
 
   if (!users || status === 'loading')
     return (
@@ -16,10 +19,22 @@ export const ChatPage = () => {
       </MainLayout>
     );
 
+  const handleAddChat = (data: ChatInputProps) => {
+    console.log('with userId', currentUser?.uid);
+    console.log('with groupId', selectedGroupId);
+    console.log('with data', data.message);
+  };
+
   return (
     <MainLayout>
       {currentUser && (
-        <ChatTabs onTabClick={(user) => addGroup(user)} users={users} currentUser={currentUser} />
+        <ChatTabs
+          onAddChat={handleAddChat}
+          onTabClick={(user) => addGroup(user)}
+          users={users}
+          currentUser={currentUser}
+          messages={groupMessages || []}
+        />
       )}
     </MainLayout>
   );

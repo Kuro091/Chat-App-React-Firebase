@@ -21,6 +21,25 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getDatabase(app);
 
-export type UserData = Omit<UserInfo, 'uid'> & {
+export type UserData = UserInfo & {
   online: boolean;
 };
+
+export interface Group {
+  title: string;
+  lastMessage: string;
+  timeStamp: string;
+}
+
+export interface GroupMembers {
+  [key: string]: boolean;
+}
+
+export interface GroupMessages {
+  [key: string]: {
+    sender: string;
+    content: string;
+    timestamp: string;
+    read: boolean;
+  };
+}
