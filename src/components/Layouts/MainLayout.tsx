@@ -1,14 +1,22 @@
-import React from 'react';
+import { PropsWithChildren } from 'react';
 
 import { cn } from '@/lib/tailwind-classname';
 
 import { Header } from './Header/Header';
 
-export const MainLayout = ({ children }: { children: React.ReactNode }) => {
+export const MainLayout = ({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) => {
   return (
     <>
       <Header />
-      <main className={cn('min-h-screen w-screen flex flex-col text-black custom-background')}>
+      <main
+        className={cn(
+          'min-h-screen w-screen flex flex-col text-black custom-background',
+          className,
+        )}
+      >
         {children}
       </main>
     </>
