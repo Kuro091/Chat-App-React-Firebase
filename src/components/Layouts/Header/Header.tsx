@@ -4,10 +4,12 @@ import { Menu, X } from 'lucide-react';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+import { UserProfile } from '@/components/common/UserProfile';
 import { Icons } from '@/components/icons/Icons';
 import { siteConfig } from '@/config/site';
 import { LogoutButton } from '@/features/auth';
 import { useAuth } from '@/features/auth/hooks/useAuth';
+import { useUsers } from '@/features/auth/hooks/useUsers';
 import { cn } from '@/lib/tailwind-classname';
 import { useSiteStore } from '@/store/site';
 
@@ -27,6 +29,8 @@ const Hamburger = ({ open }: { open: boolean }) => {
 export const Header = () => {
   const { user } = useAuth();
   const isLoggedIn = !!user;
+  const { currentUser } = useUsers();
+
   const headerRef = useRef<HTMLDivElement>(null);
   const { setHeaderSize } = useSiteStore();
 
@@ -56,17 +60,21 @@ export const Header = () => {
 
               <Disclosure.Panel className="flex flex-col w-full my-5 lg:hidden">
                 <>
-                  <NavMenu
-                    navigation={siteConfig.getNavLinks(isLoggedIn)}
-                    mobile={true}
-                  />
+                  <NavMenu navigation={siteConfig.getNavLinks(isLoggedIn)} mobile={true} />
                 </>
               </Disclosure.Panel>
             </div>
           </>
         )}
       </Disclosure>
-      {isLoggedIn && <span>{user.displayName}</span>}
+      {currentUser && (
+        <UserProfile
+          inverted
+          displayName={currentUser?.displayName || ''}
+          online={currentUser?.online || false}
+          photoURL={currentUser?.photoURL || ''}
+        />
+      )}
       {/* Desktop Nav  */}
       <div className="hidden text-center lg:flex lg:items-center">
         <ul className="items-center justify-end flex-1 pt-6 lg:pt-0 list-reset lg:flex">
@@ -78,13 +86,7 @@ export const Header = () => {
   );
 };
 
-const NavMenu = ({
-  navigation,
-  mobile = false,
-}: {
-  navigation: NavItem[];
-  mobile?: boolean;
-}) => {
+const NavMenu = ({ navigation, mobile = false }: { navigation: NavItem[]; mobile?: boolean }) => {
   return (
     <>
       {navigation.map((item, index) => {
@@ -104,7 +106,7 @@ const MenuItem = ({ item, mobile }: { item: NavItem; mobile: boolean }) => {
       to={item?.href ? item.href : '#'}
       className={cn(
         'text-primary-foreground font-bold text-lg rounded-md outline-none hover:text-indigo-200 focus:text-indigo-100  transition-all focus:outline-none',
-        mobile ? 'w-full block px-4 py-2 -ml-4' : 'inline-block px-4 py-2',
+        mobile ? 'w-full block px-4 py-2 -ml-4' : 'inline-block px-4 py-2'
       )}
     >
       {item.title}

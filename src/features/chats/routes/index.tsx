@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { Chat } from './Chat';
+import { ChatPage } from './ChatPage';
 
 export const ChatRoutes = () => {
   return (
     <Routes>
-      <Route path="" element={<Chat />} />
+      <Route path="" element={<ChatPage />} />
     </Routes>
   );
 };

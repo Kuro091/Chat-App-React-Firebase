@@ -23,8 +23,9 @@ const UserDetails = () => {
   );
 };
 
-const Landing = () => {
+const LandingPage = () => {
   const { headerSize } = useSiteStore();
+
   return (
     <MainLayout>
       <div
@@ -41,4 +42,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default LandingPage;

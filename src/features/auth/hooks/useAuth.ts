@@ -7,16 +7,19 @@ export const useAuth = () => {
   const connectedRef = ref(database, '.info/connected');
   const userRef = ref(database, `users/${user?.uid}`);
 
-  onValue(connectedRef, (snap) => {
-    if (snap.val() == false) {
-      return;
-    }
-    onDisconnect(userRef)
-      .update({ online: false })
-      .then(() => {
-        update(userRef, { online: true });
-      });
-  });
+  if (user?.uid) {
+    onValue(connectedRef, (snap) => {
+      if (snap.val() == false) {
+        return;
+      }
+
+      onDisconnect(userRef)
+        .update({ online: false })
+        .then(() => {
+          update(userRef, { online: true });
+        });
+    });
+  }
 
   return {
     user,

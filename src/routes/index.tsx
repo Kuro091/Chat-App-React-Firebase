@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { useRoutes } from 'react-router-dom';
 
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import Landing from '@/features/misc/routes/Landing';
+import Landing from '@/features/misc/routes/LandingPage';
 
 import { protectedRoutes } from './protected';
 import { publicRoutes } from './public';

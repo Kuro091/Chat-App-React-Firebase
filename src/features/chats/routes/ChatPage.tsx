@@ -4,8 +4,9 @@ import { useUsers } from '@/features/auth/hooks/useUsers';
 
 import { ChatTabs } from '../components/ChatTabs';
 
-export const Chat = () => {
-  const { users, status } = useUsers();
+export const ChatPage = () => {
+  const { users, status, currentUser } = useUsers();
+
   if (!users || status === 'loading')
     return (
       <MainLayout className="items-center justify-center">
@@ -14,8 +15,6 @@ export const Chat = () => {
     );
 
   return (
-    <MainLayout>
-      <ChatTabs users={users} />
-    </MainLayout>
+    <MainLayout>{currentUser && <ChatTabs users={users} currentUser={currentUser} />}</MainLayout>
   );
 };

@@ -15,7 +15,7 @@ export const LogoutButton = () => {
       className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
       onClick={async () => {
         await signOut();
-        user && updateUser(user.uid, { online: false });
+        user?.uid && updateUser(user.uid, { online: false });
         navigate('/');
       }}
     >
