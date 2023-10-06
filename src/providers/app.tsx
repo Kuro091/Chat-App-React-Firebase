@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider, DatabaseProvider, FirebaseAppProvider } from 'reactfire';
 
+import { LoadingSpinner } from '@/components/loadingUI';
 import { app, auth, db } from '@/lib/firebase';
 
 type AppProviderProps = {
@@ -10,14 +11,8 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <React.Suspense
-      fallback={
-        <div className="flex items-center justify-center w-screen h-screen">
-          Spinner here...
-        </div>
-      }
-    >
-      <FirebaseAppProvider firebaseApp={app}>
+    <React.Suspense fallback={<LoadingSpinner className="w-screen h-screen" />}>
+      <FirebaseAppProvider suspense={true} firebaseApp={app}>
         <AuthProvider sdk={auth}>
           <DatabaseProvider sdk={db}>
             <Router>{children}</Router>

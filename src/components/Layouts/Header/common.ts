@@ -10,5 +10,8 @@ export interface NavItem {
   description?: string;
 }
 
-export const isActiveRoute = (currentRouteHref: string, providedRouteHref: string) =>
-  currentRouteHref.startsWith(providedRouteHref);
+export const isActiveRoute = (currentRouteHref: string, providedRouteHref: string) => {
+  const providedRouteHrefWithoutLastSegment = providedRouteHref.replace(/\/[^/]+$/, '');
+
+  return currentRouteHref === providedRouteHrefWithoutLastSegment;
+};

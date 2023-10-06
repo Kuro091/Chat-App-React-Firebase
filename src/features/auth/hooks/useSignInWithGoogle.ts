@@ -1,19 +1,6 @@
-import {
-  Auth,
-  GoogleAuthProvider,
-  UserCredential,
-  signInWithPopup,
-} from 'firebase/auth';
+import { Auth, GoogleAuthProvider, UserCredential, signInWithPopup } from 'firebase/auth';
+import { useState } from 'react';
 import { useAuth } from 'reactfire';
-
-const signIn = async (
-  auth: Auth,
-  callback?: (value: UserCredential) => void,
-) => {
-  const provider = new GoogleAuthProvider();
-
-  await signInWithPopup(auth, provider).then(callback);
-};
 
 interface UseGoogleSignInProps {
   callback?: (value: UserCredential) => void;
@@ -21,8 +8,24 @@ interface UseGoogleSignInProps {
 
 export const useGoogleSignIn = ({ callback }: UseGoogleSignInProps) => {
   const auth = useAuth();
+  const [loading, setLoading] = useState(false);
+
+  const signIn = async (auth: Auth, callback?: (value: UserCredential) => void) => {
+    const provider = new GoogleAuthProvider();
+    setLoading(true);
+
+    await signInWithPopup(auth, provider)
+      .then(callback)
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+
+    setLoading(false);
+  };
 
   return {
     signInWithGoogle: () => signIn(auth, callback),
+    loading,
   };
 };

@@ -1,4 +1,5 @@
 import { MainLayout } from '@/components/layouts';
+import { LoadingSpinner } from '@/components/loadingUI';
 import { AuthWrapper } from '@/features/auth';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { cn } from '@/lib/tailwind-classname';
@@ -8,7 +9,7 @@ const UserDetails = () => {
   const { user, status } = useAuth();
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
   if (!user) {
     throw new Error('No user Loaded');

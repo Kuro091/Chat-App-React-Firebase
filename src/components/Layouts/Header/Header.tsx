@@ -10,10 +10,11 @@ import { siteConfig } from '@/config/site';
 import { LogoutButton } from '@/features/auth';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useUsers } from '@/features/auth/hooks/useUsers';
+import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { cn } from '@/lib/tailwind-classname';
 import { useSiteStore } from '@/store/site';
 
-import { NavItem } from './common';
+import { NavItem, isActiveRoute } from './common';
 
 const Hamburger = ({ open }: { open: boolean }) => {
   return (
@@ -77,7 +78,7 @@ export const Header = () => {
       )}
       {/* Desktop Nav  */}
       <div className="hidden text-center lg:flex lg:items-center">
-        <ul className="items-center justify-end flex-1 pt-6 lg:pt-0 list-reset lg:flex">
+        <ul className="items-center justify-end flex-1 pt-6 lg:pt-0 list-reset lg:flex gap-x-3">
           <NavMenu navigation={siteConfig.getNavLinks(isLoggedIn)} />
           {isLoggedIn && <LogoutButton />}
         </ul>
@@ -87,12 +88,16 @@ export const Header = () => {
 };
 
 const NavMenu = ({ navigation, mobile = false }: { navigation: NavItem[]; mobile?: boolean }) => {
+  const path = useCurrentPath();
+
   return (
     <>
       {navigation.map((item, index) => {
+        const isActive = isActiveRoute(item.href as string, path);
+
         return (
           <div key={index}>
-            <MenuItem item={item} mobile={mobile} />
+            <MenuItem item={item} mobile={mobile} active={isActive} />
           </div>
         );
       })}
@@ -100,13 +105,22 @@ const NavMenu = ({ navigation, mobile = false }: { navigation: NavItem[]; mobile
   );
 };
 
-const MenuItem = ({ item, mobile }: { item: NavItem; mobile: boolean }) => {
+const MenuItem = ({
+  item,
+  mobile,
+  active = false,
+}: {
+  item: NavItem;
+  mobile: boolean;
+  active?: boolean;
+}) => {
   return (
     <Link
       to={item?.href ? item.href : '#'}
       className={cn(
         'text-primary-foreground font-bold text-lg rounded-md outline-none hover:text-indigo-200 focus:text-indigo-100  transition-all focus:outline-none',
-        mobile ? 'w-full block px-4 py-2 -ml-4' : 'inline-block px-4 py-2'
+        mobile ? 'w-full block px-4 py-2 -ml-4' : 'inline-block px-4 py-2',
+        active ? 'bg-indigo-500' : ''
       )}
     >
       {item.title}

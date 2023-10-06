@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { useRoutes } from 'react-router-dom';
 
 import { useAuth } from '@/features/auth/hooks/useAuth';
@@ -17,17 +16,5 @@ export const AppRoutes = () => {
   const routes = user ? protectedRoutes : publicRoutes;
   const element = useRoutes([...commonRoutes, ...routes]);
 
-  return (
-    <>
-      <Suspense
-        fallback={
-          <div className="h-full w-full flex items-center justify-center">
-            Loading...
-          </div>
-        }
-      >
-        {element}
-      </Suspense>
-    </>
-  );
+  return <>{element}</>;
 };
