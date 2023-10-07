@@ -36,10 +36,15 @@ export interface GroupMembers {
 }
 
 export interface GroupMessages {
-  [key: string]: {
-    sender: string;
-    content: string;
-    timestamp: string;
-    read: boolean;
-  };
+  [key: string]: GroupMessage;
+}
+
+export interface GroupMessage {
+  sender: string;
+  senderDisplayName: string;
+  photoUrl: string;
+  content: string;
+  timestamp: string;
+  readTimeStamp: string;
+  read: boolean;
 }

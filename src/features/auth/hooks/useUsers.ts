@@ -21,7 +21,7 @@ export const useUsers = () => {
         displayName: data.user.displayName,
         email: data.user.email,
         photoURL: data.user.photoURL,
-        online: true,
+        online: false,
       } as UserData);
     }
   };
@@ -29,6 +29,10 @@ export const useUsers = () => {
   const updateUser = async (uid: string, data: Partial<UserData>) => {
     const userRef = ref(database, `users/${uid}`);
     update(userRef, data);
+  };
+
+  const getUserByUid = (uid: string) => {
+    return users?.find((u) => u.uid === uid);
   };
 
   const currentUser = users?.find((u) => u.email === user?.email);
@@ -39,5 +43,6 @@ export const useUsers = () => {
     updateUser,
     addUser,
     currentUser,
+    getUserByUid,
   };
 };

@@ -26,8 +26,15 @@ export const useGroupMembers = () => {
     return '';
   };
 
+  const getMembersByGroupId = (groupId: string): string[] => {
+    const group = groupMembers?.find((group) => group.groupId === groupId);
+    const groups = Object.entries(group || {}).filter(([key]) => key !== 'groupId');
+    return groups.map(([key]) => key);
+  };
+
   return {
     groupMembers,
     getGroupIdByMembers,
+    getMembersByGroupId,
   };
 };

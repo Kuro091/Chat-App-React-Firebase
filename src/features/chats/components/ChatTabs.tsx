@@ -1,15 +1,16 @@
 import { UserProfile } from '@/components/common/UserProfile';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/elements/tabs';
-import { GroupMessages, UserData } from '@/lib/firebase';
+import { GroupMessage, UserData } from '@/lib/firebase';
 
-import { ChatInputProps, GroupConversation } from './GroupConversation';
+import { MessageInputProps } from './elements/ChatInput';
+import { GroupConversation } from './GroupConversation';
 
 interface ChatTabsProps {
   users: UserData[];
   currentUser: UserData;
   onTabClick: (users: UserData[]) => void;
-  messages: GroupMessages[];
-  onAddChat: (data: ChatInputProps) => void;
+  messages: (GroupMessage & { messageId: string })[];
+  onAddChat: (data: MessageInputProps) => void;
 }
 
 export const ChatTabs = ({

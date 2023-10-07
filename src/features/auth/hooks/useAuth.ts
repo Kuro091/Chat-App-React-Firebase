@@ -1,4 +1,5 @@
 import { onDisconnect, onValue, ref, update } from 'firebase/database';
+import { useEffect } from 'react';
 import { useDatabase, useUser } from 'reactfire';
 
 export const useAuth = () => {
@@ -6,9 +7,8 @@ export const useAuth = () => {
   const database = useDatabase();
   const connectedRef = ref(database, '.info/connected');
   const userRef = ref(database, `users/${user?.uid}`);
-
-  if (user?.uid) {
-    onValue(connectedRef, (snap) => {
+  useEffect(() => {
+    const unsub = onValue(connectedRef, (snap) => {
       if (snap.val() == false) {
         return;
       }
@@ -19,7 +19,11 @@ export const useAuth = () => {
           update(userRef, { online: true });
         });
     });
-  }
+
+    return () => {
+      unsub();
+    };
+  }, [user, userRef, connectedRef]);
 
   return {
     user,

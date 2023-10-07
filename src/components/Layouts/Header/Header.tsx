@@ -62,6 +62,7 @@ export const Header = () => {
               <Disclosure.Panel className="flex flex-col w-full my-5 lg:hidden">
                 <>
                   <NavMenu navigation={siteConfig.getNavLinks(isLoggedIn)} mobile={true} />
+                  {isLoggedIn && <LogoutButton />}
                 </>
               </Disclosure.Panel>
             </div>
