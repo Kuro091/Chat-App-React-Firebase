@@ -25,12 +25,12 @@ export const GroupConversation = ({ messages, onSubmit }: GroupConversationProps
     <div className="h-full px-16 py-5 bg-accent flex flex-col ">
       <div className="flex flex-col gap-y-5 overflow-auto pb-5">
         <h1 className="text-2xl font-semibold">Group Chat</h1>
-        {messages.map((message) => {
+        {messages.map((message, index) => {
           const isFromSender = message.sender === currentUser?.uid;
           if (isFromSender) {
             return (
               <ChatDisplay
-                key={message.timestamp}
+                key={message.timestamp ?? index}
                 message={{ ...message, sender: 'You', photoUrl: currentUser?.photoURL || '' }}
                 className="self-end pr-12"
                 inverted
@@ -38,7 +38,11 @@ export const GroupConversation = ({ messages, onSubmit }: GroupConversationProps
             );
           }
           return (
-            <ChatDisplay className="self-start flex-1" key={message.timestamp} message={message} />
+            <ChatDisplay
+              className="self-start flex-1"
+              key={message.timestamp ?? index}
+              message={message}
+            />
           );
         })}
         <div ref={scrollRef}></div>

@@ -21,7 +21,7 @@ export const useGroupMessages = (groupId: string) => {
   const database = useDatabase();
   const { currentUser } = useUsers();
 
-  const groupMessagesRef = ref(database, `groupMessages/${groupId}}`);
+  const groupMessagesRef = ref(database, `groupMessages/${groupId}`);
   // const groupMembersQuery = query(groupMessagesRef);
 
   const { data: groupMessages } = useDatabaseObjectData<GroupMessages>(groupMessagesRef, {
@@ -34,11 +34,14 @@ export const useGroupMessages = (groupId: string) => {
       const message = snap.val() as GroupMessage;
       if (message.sender !== currentUser?.uid && !message.read) {
         const messageId = snap.key as string;
-        const messageRef = ref(database, `groupMessages/${groupId}}/${messageId}`);
-        update(messageRef, {
-          readTimeStamp: new Date().toISOString(),
-          read: true,
-        });
+        if (messageId !== '' && groupId !== '') {
+          const messageRef = ref(database, `groupMessages/${groupId}/${messageId}`);
+          console.log('marking message as read', messageRef);
+          update(messageRef, {
+            readTimeStamp: Date.now(),
+            read: true,
+          });
+        }
       }
     });
 
@@ -52,6 +55,7 @@ export const useGroupMessages = (groupId: string) => {
     const newMessage: GroupMessage = {
       ...message,
       read: false,
+      notified: false,
     };
     await set(newMessageRef, newMessage);
   };

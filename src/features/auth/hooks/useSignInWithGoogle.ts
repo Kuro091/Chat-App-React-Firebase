@@ -12,6 +12,10 @@ export const useGoogleSignIn = ({ callback }: UseGoogleSignInProps) => {
 
   const signIn = async (auth: Auth, callback?: (value: UserCredential) => void) => {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: 'select_account',
+    });
+
     setLoading(true);
 
     await signInWithPopup(auth, provider)

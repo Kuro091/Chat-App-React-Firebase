@@ -1,6 +1,6 @@
 import { UserCredential } from 'firebase/auth';
 import { orderByChild, query, ref, set, update } from 'firebase/database';
-import { useDatabase, useDatabaseListData, useUser } from 'reactfire';
+import { useAuth, useDatabase, useDatabaseListData } from 'reactfire';
 
 import { UserData } from '@/lib/firebase';
 
@@ -12,7 +12,7 @@ export const useUsers = () => {
     idField: 'uid',
   });
 
-  const { data: user } = useUser();
+  const { currentUser: currentAuthUser } = useAuth();
 
   const addUser = async (data: UserCredential) => {
     if (data.user.uid) {
@@ -35,7 +35,7 @@ export const useUsers = () => {
     return users?.find((u) => u.uid === uid);
   };
 
-  const currentUser = users?.find((u) => u.email === user?.email);
+  const currentUser = users?.find((u) => u.uid === currentAuthUser?.uid) || null;
 
   return {
     users,

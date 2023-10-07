@@ -1,9 +1,6 @@
 import { lazyImport } from '@/utils/lazyImport';
 
-const { ChatRoutes } = lazyImport(
-  () => import('@/features/chats'),
-  'ChatRoutes',
-);
+const { ChatRoutes } = lazyImport(() => import('@/features/chats'), 'ChatRoutes');
 
 export const protectedRoutes = [
   {

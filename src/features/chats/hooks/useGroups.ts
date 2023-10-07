@@ -29,7 +29,7 @@ export const useGroups = () => {
     const newGroup: Group = {
       title,
       lastMessage: '',
-      timeStamp: new Date().toISOString(),
+      timeStamp: Date.now(),
     };
     set(newGroupRef, newGroup);
     setSelectedGroupId(groupId);

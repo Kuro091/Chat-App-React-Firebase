@@ -8,9 +8,9 @@
   },
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "cross-env VITE_CONFIG=main vite build && cross-env VITE_CONFIG=sw vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 ",
-    "preview": "vite preview"
+    "preview": "vite preview --host"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
@@ -26,6 +26,7 @@
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
     "react-hook-form": "^7.47.0",
+    "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.16.0",
     "react-spinners": "^0.13.8",
     "reactfire": "^4.2.3",
@@ -53,7 +54,8 @@
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.2",
-    "vite": "^4.4.2"
+    "vite": "^4.4.2",
+    "vite-plugin-pwa": "^0.16.5"
   },
   "overrides": {
     "tsconfig-paths": "^4.0.0"

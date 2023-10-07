@@ -8,7 +8,7 @@ import { useGroupMessages } from '../hooks/useGroupMessages';
 import { useGroups } from '../hooks/useGroups';
 
 export const ChatPage = () => {
-  const { users, status, currentUser } = useUsers();
+  const { users, currentUser, status } = useUsers();
   const { addGroup, selectedGroupId } = useGroups();
 
   // this only renders if there's a selected group
@@ -27,10 +27,11 @@ export const ChatPage = () => {
       content: data.message,
       sender: currentUser?.uid || '',
       photoUrl: currentUser?.photoURL || '',
-      timestamp: new Date().toISOString(),
+      timestamp: Date.now(),
       read: false,
       senderDisplayName: currentUser?.displayName || '',
-      readTimeStamp: new Date().toISOString(),
+      readTimeStamp: Date.now(),
+      notified: false,
     });
   };
 

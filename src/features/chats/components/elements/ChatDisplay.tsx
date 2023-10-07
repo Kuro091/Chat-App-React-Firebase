@@ -22,7 +22,6 @@ export const ChatDisplay = ({ message, className, inverted }: ChatDisplayProps) 
   if (inverted) {
     return (
       <div className={cn('flex gap-x-2 items-center', className)}>
-        {JSON.stringify(message.read)}
         <SeenIcon read={message.read} />
         <div className="flex flex-col">
           <span className="text-xs text-gray-400">{formatDate(message.timestamp)}</span>
@@ -36,7 +35,6 @@ export const ChatDisplay = ({ message, className, inverted }: ChatDisplayProps) 
 
   return (
     <div className={cn('flex gap-x-2 items-center', className)}>
-      {JSON.stringify(message.read)}
       <SeenIcon read={message.read} />
       <img src={message.photoUrl} alt="user" className="w-10 h-10 rounded-full" />
       <div className="flex flex-col">

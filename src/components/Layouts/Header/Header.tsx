@@ -8,7 +8,6 @@ import { UserProfile } from '@/components/common/UserProfile';
 import { Icons } from '@/components/icons/Icons';
 import { siteConfig } from '@/config/site';
 import { LogoutButton } from '@/features/auth';
-import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useUsers } from '@/features/auth/hooks/useUsers';
 import { useCurrentPath } from '@/hooks/useCurrentPath';
 import { cn } from '@/lib/tailwind-classname';
@@ -28,9 +27,8 @@ const Hamburger = ({ open }: { open: boolean }) => {
 };
 
 export const Header = () => {
-  const { user } = useAuth();
-  const isLoggedIn = !!user;
   const { currentUser } = useUsers();
+  const isLoggedIn = !!currentUser;
 
   const headerRef = useRef<HTMLDivElement>(null);
   const { setHeaderSize } = useSiteStore();
@@ -69,7 +67,7 @@ export const Header = () => {
           </>
         )}
       </Disclosure>
-      {currentUser && (
+      {currentUser?.uid && (
         <UserProfile
           className="w-full lg:w-fit mt-5 lg:mt-0"
           inverted

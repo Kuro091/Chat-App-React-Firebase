@@ -1,13 +1,15 @@
 import { onDisconnect, onValue, ref, update } from 'firebase/database';
 import { useEffect } from 'react';
-import { useDatabase, useUser } from 'reactfire';
+import { useDatabase, useAuth as useReactFireAuth } from 'reactfire';
 
 export const useAuth = () => {
-  const { data: user, status, isComplete, error } = useUser();
+  const { currentUser } = useReactFireAuth();
   const database = useDatabase();
   const connectedRef = ref(database, '.info/connected');
-  const userRef = ref(database, `users/${user?.uid}`);
+  const userRef = ref(database, `users/${currentUser?.uid || ''}`);
+
   useEffect(() => {
+    if (!currentUser) return;
     const unsub = onValue(connectedRef, (snap) => {
       if (snap.val() == false) {
         return;
@@ -23,12 +25,9 @@ export const useAuth = () => {
     return () => {
       unsub();
     };
-  }, [user, userRef, connectedRef]);
+  }, [currentUser, userRef, connectedRef]);
 
   return {
-    user,
-    status,
-    isComplete,
-    error,
+    currentUser,
   };
 };

@@ -1,12 +1,31 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import { resolve } from 'path'
+import { resolve } from 'path';
 
-// https://vitejs.dev/config/
+import react from '@vitejs/plugin-react-swc';
+import { defineConfig } from 'vite';
+// import { VitePWA } from 'vite-plugin-pwa';
+
+const configs = {
+  sw: {
+    build: {
+      outDir: './dist',
+      lib: {
+        entry: resolve('./src/firebase-messaging-sw.js'),
+        fileName: 'firebase-messaging-sw',
+        formats: ['es'],
+      },
+      emptyOutDir: false,
+    },
+    main: {},
+  },
+};
+
+const config = configs[process.env.VITE_CONFIG || ''];
+
+/** @type {import('vite').UserConfig} */
 export default defineConfig({
-  plugins: [react({
-  })],
+  plugins: [react({})],
   resolve: {
-    alias: [{ find: "@", replacement: resolve(__dirname, "./src") }]
-  }  
-})
+    alias: [{ find: '@', replacement: resolve(__dirname, './src') }],
+  },
+  ...config,
+});

@@ -20,7 +20,7 @@ export const ChatTabs = ({
   messages,
   onAddChat,
 }: ChatTabsProps) => {
-  const displayedUsers = users.filter((user) => user.email != currentUser.email);
+  const displayedUsers = users.filter((user) => user.uid != currentUser.uid);
 
   return (
     <div className="flex flex-col overflow-y-auto h-full">
