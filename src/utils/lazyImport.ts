@@ -7,9 +7,7 @@ export function lazyImport<
   K extends keyof I,
 >(factory: () => Promise<I>, name: K): I {
   return Object.create({
-    [name]: React.lazy(() =>
-      factory().then((module) => ({ default: module[name] })),
-    ),
+    [name]: React.lazy(() => factory().then((module) => ({ default: module[name] }))),
   });
 }
 

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 
 import { MainLayout } from '@/components/layouts';
 import { AuthWrapper } from '@/features/auth';

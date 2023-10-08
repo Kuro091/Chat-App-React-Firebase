@@ -1,8 +1,9 @@
-import { UserCredential } from 'firebase/auth';
+import { UserCredential, onAuthStateChanged } from 'firebase/auth';
 import { orderByChild, query, ref, set, update } from 'firebase/database';
+import { useCallback, useEffect, useState } from 'react';
 import { useAuth, useDatabase, useDatabaseListData } from 'reactfire';
 
-import { UserData } from '@/lib/firebase';
+import { UserData, auth } from '@/lib/firebase';
 
 export const useUsers = () => {
   const database = useDatabase();
@@ -11,7 +12,7 @@ export const useUsers = () => {
   const { data: users, status } = useDatabaseListData<UserData & { uid: string }>(usersQuery, {
     idField: 'uid',
   });
-
+  const [currentUser, setCurrentUser] = useState<UserData | null>(null);
   const { currentUser: currentAuthUser } = useAuth();
 
   const addUser = async (data: UserCredential) => {
@@ -31,11 +32,25 @@ export const useUsers = () => {
     update(userRef, data);
   };
 
-  const getUserByUid = (uid: string) => {
-    return users?.find((u) => u.uid === uid);
-  };
+  const getUserByUid = useCallback(
+    (uid: string) => {
+      return users?.find((u) => u.uid === uid);
+    },
+    [users]
+  );
 
-  const currentUser = users?.find((u) => u.uid === currentAuthUser?.uid) || null;
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userWithAddtionalInfo = getUserByUid(user.uid) as UserData;
+        return setCurrentUser(userWithAddtionalInfo);
+      }
+
+      return setCurrentUser(null);
+    });
+
+    return () => unsub();
+  }, [users, currentAuthUser, getUserByUid]);
 
   return {
     users,

@@ -1,0 +1,18 @@
+{
+  "rules": {
+    ".read": true,  // Anyone can read
+    ".write": true,
+    "users": {
+      ".indexOn": ["email", "online"],
+      "$uid": {
+        ".write": "auth.uid == $uid",  // Only the user can write their own data
+      }
+    },
+    "groupMembers": {
+      ".indexOn": "groupId"
+    },
+    "groupMessages": {
+      ".indexOn": "timeStamp"
+    }
+  }
+}
