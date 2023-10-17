@@ -1,7 +1,7 @@
 {
   "rules": {
     ".read": true,  // Anyone can read
-    ".write": true,
+    ".write": "auth.uid == $uid",
     "users": {
       ".indexOn": ["email", "online"],
       "$uid": {
